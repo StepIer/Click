@@ -2,6 +2,7 @@ package com.myproject.click
 
 import android.accessibilityservice.GestureDescription
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Path
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     var - common
     i?:0
     */
+
+
+
     lateinit var btnStart: Button
     lateinit var btnStop: Button
     lateinit var container: FrameLayout
@@ -31,17 +35,6 @@ class MainActivity : AppCompatActivity() {
     var yDelta: Int = 0
     var clickAmount: Int  = 0
 
-//    fun click(x: Int, y: Int) {
-//
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
-//        val path = Path()
-//        path.moveTo(x.toFloat(), y.toFloat())
-//        val builder = GestureDescription.Builder()
-//        val gestureDescription = builder
-//            .addStroke(GestureDescription.StrokeDescription(path, 10, 10))
-//            .build()
-//        dispatchGesture(gestureDescription, null, null)
-//    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +60,13 @@ class MainActivity : AppCompatActivity() {
             textAmount.text = "$clickAmount Clicks on me"
         }
         btnStart.setOnClickListener {
+
+
+            val intent = Intent(this, ClickService::class.java)
+
+            startService(intent) //запускает сервисы
+
+
             job?.cancel()
             job = scope.launch() {
                 while (true) {
